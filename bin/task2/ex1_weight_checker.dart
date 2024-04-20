@@ -9,4 +9,3 @@ void main() {
     print("Normal Weight");
   }
 }
-// this is a dart application to check 
