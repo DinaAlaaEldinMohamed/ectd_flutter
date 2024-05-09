@@ -11,7 +11,7 @@ class Car {
   void showCarInfo() {
     print("Car Info ========================");
     print("Car Color is => $color");
-    print("Car motor speed is => $color");
-    print("Car manfacture year is => $color");
+    print("Car motor speed is => $motorSpeed");
+    print("Car manfacture year is => $manufactureYear");
   }
 }
