@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:task10_employees/utils/database_helper.dart';
 import 'package:task10_employees/views/forms/add_employee.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  var db = DatabaseHelper();
+  var sqlhelper = DatabaseHelper();
+  await sqlhelper.initDb();
+
   runApp(const MyApp());
 }
 

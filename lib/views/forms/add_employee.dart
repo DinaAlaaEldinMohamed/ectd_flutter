@@ -13,7 +13,6 @@ class AddEmpolyeeForm extends StatefulWidget {
 }
 
 class _AddEmpolyeeFormState extends State<AddEmpolyeeForm> {
-  Map userData = {};
   final _formkey = GlobalKey<FormState>();
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
@@ -23,6 +22,7 @@ class _AddEmpolyeeFormState extends State<AddEmpolyeeForm> {
   final salaryController = TextEditingController();
   final EmployeeController employeeController = EmployeeController();
   String message = '';
+  @override
   void initState() {
     super.initState();
   }
@@ -31,7 +31,11 @@ class _AddEmpolyeeFormState extends State<AddEmpolyeeForm> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Add Employee'),
+          backgroundColor: Colors.lightBlue,
+          title: Text(
+            'Add Employee',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -145,7 +149,6 @@ class _AddEmpolyeeFormState extends State<AddEmpolyeeForm> {
                                     empPhoneNumber: phoneController.text,
                                     empSalary:
                                         int.parse(salaryController.text));
-
                                 int result = await employeeController
                                     .addEmployee(newEmployee);
                                 setState(() {
@@ -171,14 +174,16 @@ class _AddEmpolyeeFormState extends State<AddEmpolyeeForm> {
                         ),
                       ),
                     ),
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => EmployeesPage()));
-                        },
-                        child: Text('View Employees'))
+                    Center(
+                      child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EmployeesPage()));
+                          },
+                          child: Text('View Employees')),
+                    )
                   ],
                 )),
           ),

@@ -6,21 +6,17 @@ class DatabaseHelper {
   Database? db;
   String EmployeeTable = "employees";
 
-  DatabaseHelper() {
-    initDb();
-  }
-
-  initDb() async {
+  Future<void> initDb() async {
     try {
       if (kIsWeb) {
         var factory = databaseFactoryFfiWeb;
-        var db = await factory.openDatabase('hr_system.db',
-            options: OpenDatabaseOptions(
-                version: 1,
-                onCreate: (db, version) async {
-                  createTables();
-                },
-                singleInstance: true));
+        var db = await factory.openDatabase('hr_system.db');
+        // options: OpenDatabaseOptions(
+        //     version: 1,
+        //     onCreate: (db, version) async {
+        //       createTables();
+        //     },
+        //     singleInstance: true));
       } else {
         db = await openDatabase('hr_system.db', version: 1,
             onCreate: (db, version) {
@@ -48,8 +44,9 @@ class DatabaseHelper {
             'empSalary INTEGER'
             ')');
       }
-    } catch (e) {
+    } catch (e, s) {
       print('table not created $e');
+      print('table not created $s');
     }
   }
 }
