@@ -6,12 +6,21 @@ class EmployeeController {
 
   Future<int> addEmployee(Employee employee) async {
     try {
-      final dbClient = await con.db; // Get the database instance
-      int result = await dbClient!.insert('Employee', employee.toMap());
+      final dbClient = await con.db;
+      int result = await dbClient!.insert('employees', employee.toMap());
       return result;
     } catch (e) {
       print('Error adding employee: $e');
       return -1;
     }
+  }
+
+  Future<List<Employee>?> getAllEmployees() async {
+    var dbClient = await con.db;
+    var res = await dbClient!.rawQuery('SELECT * FROM employees');
+
+    List<Employee>? list =
+        res.isNotEmpty ? res.map((c) => Employee.fromMap(c)).toList() : null;
+    return list;
   }
 }

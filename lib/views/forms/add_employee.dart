@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:task10_employees/controllers/employeeController.dart';
 import 'package:task10_employees/models/employees.dart';
+import 'package:task10_employees/views/pages/employees_page.dart';
 import 'package:task10_employees/widgets/custom_text_form_field.dart';
 
 class AddEmpolyeeForm extends StatefulWidget {
@@ -19,7 +20,9 @@ class _AddEmpolyeeFormState extends State<AddEmpolyeeForm> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final phoneController = TextEditingController();
+  final salaryController = TextEditingController();
   final EmployeeController employeeController = EmployeeController();
+  String message = '';
   void initState() {
     super.initState();
   }
@@ -107,6 +110,22 @@ class _AddEmpolyeeFormState extends State<AddEmpolyeeForm> {
                         ]),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CustomTextField(
+                        controller: salaryController,
+                        labelText: 'Salary',
+                        hintText: 'Enter Employee Salary',
+                        keyboardType: TextInputType.number,
+                        icon: Icons.money,
+                        iconColor: Colors.blueGrey,
+                        validator: MultiValidator([
+                          RequiredValidator(errorText: 'Enter employee salary'),
+                          PatternValidator(r'[0-9]',
+                              errorText: 'Salary should be number'),
+                        ]),
+                      ),
+                    ),
                     Center(
                         child: Padding(
                       padding: const EdgeInsets.all(18.0),
@@ -120,25 +139,46 @@ class _AddEmpolyeeFormState extends State<AddEmpolyeeForm> {
                             onPressed: () async {
                               if (_formkey.currentState!.validate()) {
                                 final newEmployee = Employee(
-                                  empFirstName: firstNameController.text,
-                                  empLastName: lastNameController.text,
-                                  empEmail: emailController.text,
-                                  empPhoneNumber: phoneController.text,
-                                );
+                                    empFirstName: firstNameController.text,
+                                    empLastName: lastNameController.text,
+                                    empEmail: emailController.text,
+                                    empPhoneNumber: phoneController.text,
+                                    empSalary:
+                                        int.parse(salaryController.text));
 
                                 int result = await employeeController
                                     .addEmployee(newEmployee);
-                                if (result > 0) {
-                                  print('Employee added successfully!');
-                                } else {
-                                  print('Failed to add employee');
-                                }
+                                setState(() {
+                                  if (result > 0) {
+                                    message = 'Employee added successfully!';
+                                  } else {
+                                    message = 'Failed to add employee';
+                                  }
+                                });
                               }
                             }),
                         width: MediaQuery.of(context).size.width,
                         height: 50,
                       ),
                     )),
+                    Center(
+                      child: Text(
+                        message,
+                        style: TextStyle(
+                          color: message.contains('successfully')
+                              ? Colors.green
+                              : Colors.red,
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EmployeesPage()));
+                        },
+                        child: Text('View Employees'))
                   ],
                 )),
           ),
