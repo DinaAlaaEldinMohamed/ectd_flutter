@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:task11_hotel_reservation_ui/models/extras.dart';
-import 'package:task11_hotel_reservation_ui/models/rooms.dart';
 
 String assetsPath = 'assets/images';
 DateTime checkInDate = DateTime.now();
@@ -130,7 +129,10 @@ Widget custom_slider(
   return Row(
     children: [
       app_text(text: text),
-      app_text(text: type == 'adult' ? '$adultNumber' : '$childNumber'),
+      app_text(
+          text: type == 'adult'
+              ? '${adultNumber.toInt()}'
+              : '${childNumber.toInt()}'),
       Expanded(
         flex: 1,
         child: Slider(
@@ -140,8 +142,9 @@ Widget custom_slider(
             max: max,
             inactiveColor: Color.fromARGB(87, 158, 158, 158),
             activeColor: Colors.lightBlue,
-            label:
-                type == 'adult' ? '$adultNumber Adult' : '$childNumber Child',
+            label: type == 'adult'
+                ? '${adultNumber.toInt()} Adult'
+                : '${childNumber.toInt()} Child',
             onChanged: (val) {
               type == 'adult' ? adultNumber = val : childNumber = val;
               setStateCallBack!(() {});
