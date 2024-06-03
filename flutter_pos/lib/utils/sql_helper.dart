@@ -5,32 +5,6 @@ import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 class SqlHelper {
   var path = 'pos_db6.db';
   Database? db;
-  //Map<int, String> migrationScripts = {
-  //   1: '''CREATE TABLE IF NOT EXISTS Products ("
-  //         id INTEGER PRIMARY KEY,
-  //         product_name VARCHAR(40),
-  //         quantity INTEGER,
-  //         price INTEGER)
-  //             ''',
-  //   2: '''CREATE TABLE IF NOT EXISTS Categories (
-  //         id INTEGER PRIMARY KEY,
-  //         name VARCHAR(45),
-  //         description TEXT,
-
-  //      )''',
-  //   3: '''CREATE TABLE IF NOT EXISTS Bills (
-  //         id_bill INTEGER PRIMARY KEY,
-  //         total_amount INTEGER,
-  //         payment_method VARCHAR(20),
-  //         timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)''',
-  //   4: '''CREATE TABLE IF NOT EXISTS Transactions ("
-  //         id_transaction INTEGER PRIMARY KEY,
-  //         product_id INTEGER,
-  //         count INTEGER,
-  //         bill_id INTEGER,
-  //        )''',
-  // };
-
   Future<bool> createTables() async {
     try {
       var batch = db!.batch();
