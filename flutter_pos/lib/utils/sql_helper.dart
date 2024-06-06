@@ -5,9 +5,17 @@ import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 class SqlHelper {
   var path = 'pos_db6.db';
   Database? db;
+  Future<void>? registerForeignKeys() async {
+    await db!.execute("""PRAGMA foreign_keys = ON""");
+    await db!.rawQuery(""" PRAGMA foreign_keys """);
+    //
+  }
+
   Future<bool> createTables() async {
     try {
       var batch = db!.batch();
+      await registerForeignKeys();
+      batch.rawQuery(""" PRAGMA foreign_keys """);
 
       batch.execute("""
       Create table If not exists categories(

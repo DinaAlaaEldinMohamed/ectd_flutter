@@ -98,6 +98,7 @@ class _ProductsOpsState extends State<ProductsOps> {
                     const SizedBox(height: 20),
                     SizedBox(
                       child: Form(
+                        key: formKey,
                         child: Wrap(
                           runSpacing: 20,
                           children: [
@@ -219,9 +220,7 @@ class _ProductsOpsState extends State<ProductsOps> {
 
   Future<void> onSubmit() async {
     try {
-      bool validated = true; //formKey.currentState!.validate();
-
-      if (validated) {
+      if (formKey.currentState!.validate()) {
         var sqlHelper = GetIt.I.get<SqlHelper>();
 
         if (widget.product == null) {

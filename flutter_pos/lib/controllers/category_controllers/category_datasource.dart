@@ -4,7 +4,13 @@ import 'package:flutter_pos/models/category.dart';
 
 class CategoryDataSource extends DataTableSource {
   List<Category>? categories;
-  CategoryDataSource(this.categories);
+  void Function(Category)? onUpdate;
+  void Function(Category)? onDelete;
+  CategoryDataSource(
+      {required this.categories,
+      required this.onDelete,
+      required,
+      required this.onUpdate});
   @override
   DataRow? getRow(int index) {
     return DataRow2(cells: [
@@ -16,14 +22,18 @@ class CategoryDataSource extends DataTableSource {
         children: [
           IconButton(
             icon: const Icon(Icons.edit),
-            onPressed: () {},
+            onPressed: () {
+              onUpdate!(categories![index]);
+            },
           ),
           IconButton(
             icon: const Icon(
               Icons.delete,
-              color: Colors.red,
+              color: Color.fromARGB(255, 4, 80, 186),
             ),
-            onPressed: () {},
+            onPressed: () {
+              onDelete!(categories![index]);
+            },
           ),
         ],
       )),
