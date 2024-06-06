@@ -142,11 +142,11 @@ class _HomePageState extends State<HomePage> {
                     const GridViewItem(
                       color: Color.fromARGB(255, 228, 168, 243),
                       route: '/categories',
+                      label: 'Categories',
                       child: Icon(
                         Icons.category,
                         color: Colors.blue,
                       ),
-                      label: 'Categories',
                     ),
                   ],
                 ),

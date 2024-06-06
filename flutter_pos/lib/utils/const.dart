@@ -4,12 +4,25 @@ const Color primaryColor = Color(0xFF0057DA);
 const Color primaryLightColor = Color.fromARGB(255, 104, 164, 255);
 const Color gray100Color = Color(0xFFF5F5F5);
 const Color whiteColor = Color(0xFFFFFFFF);
-
+const Color borderColor = Color(0xFFE0E0E0);
+const Color textPlaceholderColor = Color.fromARGB(218, 84, 140, 192);
+const Color primaryUltraLightColor = Color(0xFFF0F5FF);
+const Color iconGrayColor = Color(0xFFAAAAAA);
 TextStyle bodyText(Color? color) {
   return TextStyle(
     fontFamily: 'Roboto',
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w400,
+    fontSize: 16,
+    color: color,
+  );
+}
+
+TextStyle h6(Color? color) {
+  return TextStyle(
+    fontFamily: 'Roboto',
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w600,
     fontSize: 16,
     color: color,
   );

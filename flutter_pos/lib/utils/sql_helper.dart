@@ -17,9 +17,10 @@ class SqlHelper {
       )""");
       batch.execute("""
       Create table If not exists products(
-      id integer primary key,
-      name text,
-      description text,
+      productId integer primary key,
+      productName text,
+      productDescription text,
+      owner text,
       price double,
       stock integer,
       isAvaliable boolean,
