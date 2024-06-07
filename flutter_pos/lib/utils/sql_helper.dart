@@ -31,7 +31,7 @@ class SqlHelper {
       owner text,
       price double,
       stock integer,
-      isAvaliable boolean,
+      isAvailable boolean,
       image blob,
       categoryId integer
       )""");

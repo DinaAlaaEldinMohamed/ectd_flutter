@@ -7,17 +7,6 @@ class Product {
   String? categoryName;
   Product();
 
-  // Product(
-  //     {required this.productId,
-  //     required this.productName,
-  //     required this.categoryId,
-  //     required this.price,
-  //     required this.isAvailable,
-  //     this.image = '',
-  //     this.owner = '',
-  //     this.productDescription = '',
-  //     required this.stock});
-
   Product.fromJson(Map<String, dynamic> json) {
     productId = json['productId'];
     productName = json['productName'];
@@ -26,7 +15,7 @@ class Product {
     categoryId = json['categoryId'];
     stock = json['stock'];
     price = json['price'];
-    isAvailable = json['isAvaliable'] == 1 ? true : false;
+    isAvailable = json['isAvailable'] == 1 ? true : false;
     categoryName = json['categoryName'];
     image = json['image'];
   }
@@ -36,7 +25,20 @@ class Product {
       'productId': productId,
       'productName': productName,
       'productDescription': productDescription,
-      'categoryName': categoryName,
+      'owner': owner,
+      'categoryId': categoryId,
+      'stock': stock,
+      'price': price,
+      'isAvailable': isAvailable,
+      'image': image,
+    };
+  }
+
+  Map<String, dynamic> utoJson() {
+    return {
+      // 'productId': productId,
+      'productName': productName,
+      'productDescription': productDescription,
       'owner': owner,
       'categoryId': categoryId,
       'stock': stock,

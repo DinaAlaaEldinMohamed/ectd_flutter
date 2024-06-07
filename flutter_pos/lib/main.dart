@@ -35,13 +35,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         appBarTheme: const AppBarTheme(
-            backgroundColor: primaryColor, foregroundColor: Colors.white),
-        iconTheme: const IconThemeData(color: Colors.white),
+            backgroundColor: primaryColor, foregroundColor: whiteColor),
+        iconTheme: const IconThemeData(color: whiteColor),
         colorScheme: ColorScheme.fromSwatch(
-            errorColor: Colors.red,
-            cardColor: Colors.blue.shade100,
-            backgroundColor: Colors.white,
-            primarySwatch: getMaterialColor(primaryColor)),
+          errorColor: Colors.red,
+          cardColor: whiteColor,
+          backgroundColor: Colors.white,
+          primarySwatch: getMaterialColor(primaryColor),
+        ),
+        dividerTheme: const DividerThemeData(
+          color: veryLightGrayColor,
+          thickness: 0.7,
+          space: 18,
+        ),
       ),
       home: const HomePage(),
       onGenerateRoute: AppRouter.generateRoute,

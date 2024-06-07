@@ -2,15 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_pos/controllers/product_controllers/product_controller.dart';
 import 'package:flutter_pos/models/product.dart';
 import 'package:flutter_pos/utils/const.dart';
 import 'package:flutter_pos/utils/image_utils.dart';
-import 'package:flutter_pos/utils/sql_helper.dart';
 import 'package:flutter_pos/widgets/category_drop_down.dart';
 import 'package:flutter_pos/widgets/custom_elevated_button.dart';
 import 'package:flutter_pos/widgets/custom_text_field.dart';
-import 'package:get_it/get_it.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:get/get.dart';
 
 class ProductsOps extends StatefulWidget {
   final Product? product;
@@ -21,6 +20,8 @@ class ProductsOps extends StatefulWidget {
 }
 
 class _ProductsOpsState extends State<ProductsOps> {
+  final ProductController _productController = Get.find();
+
   bool isUploading = false;
   File? imageFile;
   TextEditingController? nameController;
@@ -32,6 +33,7 @@ class _ProductsOpsState extends State<ProductsOps> {
   int? selectedCategoryId;
   bool? isAvailable;
   var formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     nameController =
@@ -196,6 +198,7 @@ class _ProductsOpsState extends State<ProductsOps> {
                                     value: isAvailable ?? false,
                                     onChanged: (value) {
                                       setState(() {
+                                        print('switch on$value');
                                         isAvailable = value;
                                       });
                                     }),
@@ -221,24 +224,29 @@ class _ProductsOpsState extends State<ProductsOps> {
   Future<void> onSubmit() async {
     try {
       if (formKey.currentState!.validate()) {
-        var sqlHelper = GetIt.I.get<SqlHelper>();
-
+        int isAvailableint;
+        isAvailableint = (isAvailable == true ? 1 : 0);
+        final product = Product.fromJson({
+          'productName': nameController?.text,
+          'productDescription': descriptionController?.text,
+          'owner': ownerController?.text,
+          'price': double.parse(priceController?.text ?? '0.0'),
+          'stock': int.parse(stockController?.text ?? '0'),
+          'image': imageController?.text,
+          'categoryId': selectedCategoryId,
+          'isAvailable': isAvailableint
+        });
         if (widget.product == null) {
-          // Add Category Logic
-          await sqlHelper.db!.insert(
-              'products',
-              conflictAlgorithm: ConflictAlgorithm.replace,
-              {
-                'productName': nameController?.text,
-                'productDescription': descriptionController?.text,
-                'owner': ownerController?.text,
-                'price': double.parse(priceController?.text ?? '0.0'),
-                'stock': int.parse(stockController?.text ?? '0'),
-                'image': imageController?.text,
-                'categoryId': selectedCategoryId,
-                'isAvaliable': isAvailable ?? false,
-              });
-        } else {}
+          // add product logic
+          await _productController.addProduct(product);
+        }
+        //update product logic
+        else {
+          await _productController.UpdateProduct(
+              product, widget.product?.productId);
+
+          Navigator.pop(context, true);
+        }
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -247,19 +255,20 @@ class _ProductsOpsState extends State<ProductsOps> {
               widget.product == null
                   ? 'Product added Successfully'
                   : 'Product Updated Successfully',
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           ),
         );
         Navigator.pop(context, true);
       }
     } catch (e) {
+      print('Exceptionnnnnnnnnnnn=>$e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: Colors.red,
           content: Text(
             'Error : $e',
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       );

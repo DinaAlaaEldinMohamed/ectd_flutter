@@ -1,5 +1,6 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pos/utils/const.dart';
 
 class AppTable extends StatelessWidget {
   final List<DataColumn> columns;
@@ -30,15 +31,20 @@ class AppTable extends StatelessWidget {
         fit: FlexFit.tight,
         isHorizontalScrollBarVisible: true,
         rowsPerPage: 15,
-        horizontalMargin: 20,
+        horizontalMargin: 10,
         checkboxHorizontalMargin: 12,
+        dataRowHeight: 100,
+        // dataTextStyle: bodyText(lightGrayColor),
         columnSpacing: 20,
         wrapInCard: false,
         renderEmptyRowsInTheEnd: false,
-        headingTextStyle: const TextStyle(color: Colors.white, fontSize: 18),
-        headingRowColor:
-            MaterialStatePropertyAll(Theme.of(context).primaryColor),
-        border: TableBorder.all(color: Colors.black),
+        headingTextStyle: const TextStyle(color: lightGrayColor, fontSize: 18),
+        headingRowColor: const MaterialStatePropertyAll(whiteColor),
+        headingRowHeight: 0,
+        border: TableBorder.symmetric(
+            inside: BorderSide(color: veryLightGrayColor)),
+        // headingRowDecoration:
+        //     BoxDecoration(backgroundBlendMode: BlendMode.dstIn),
         columns: columns,
         source: source,
       ),
